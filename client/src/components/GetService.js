@@ -2,6 +2,7 @@ import React from 'react';
 import './getService.css'
 import MapView from "./MapView";
 import { Alert, Button, Modal } from 'react-bootstrap';
+import Login from './Login'
 
 class GetService extends React.Component {
 
@@ -14,7 +15,8 @@ class GetService extends React.Component {
         clickedService: {},
         userId: 0,
         time: "",
-        date: ""
+        date: "",
+        shouldLogin: false
     }
   }
   componentDidMount() {
@@ -48,10 +50,26 @@ class GetService extends React.Component {
     })
   }
   handleServiceSelect(provider){
-      this.setState({clickedService: provider});
-      this.setState({
-          showBooking: !this.state.showBooking
-      });
+      let cookieArr = [];
+      let cookieData = {};
+      if(document.cookie){
+          //userID=2; displayName=Naomi
+          //!sometimes userID is missing upon refresh
+          cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
+
+          cookieArr.forEach((e,i) => {
+              var data = e.split('=')
+              cookieData[data[0].trim()] = decodeURIComponent(data[1]);
+          })
+      }
+      if (cookieData.userID) {
+          this.setState({
+              showBooking: !this.state.showBooking,
+              clickedService: provider
+          });
+      } else {
+          this.setState({ shouldLogin: true })
+      }
   }
   async handleBookSubmit(provider){
       console.log(provider);
@@ -111,7 +129,15 @@ class GetService extends React.Component {
                   <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
               </div>
           </Alert>
+          <Alert show={this.state.shouldLogin} variant="danger">
+          <div className="alert-close" style={{ alignItems: 'center' }}>
+              <span>Please sign up or login to book.</span>
+              <Button variant="outline-danger" onClick={() => this.setState({ shouldLogin: false })}>close</Button>
+          </div>
+      </Alert>
+          <div className="row">
           <div className="row border border-secondary">
+
               <div className="col-md-5">
                   {this.props.providersList.map(data => {
                       const currency = data.price.toLocaleString('en-US', usDollar)
@@ -159,6 +185,7 @@ class GetService extends React.Component {
                 </div>
             </Modal.Body>
         </Modal>
+      </div>
       </div>
     );
   }
