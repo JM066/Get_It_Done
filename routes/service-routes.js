@@ -89,7 +89,7 @@ router.post('/book', function (req, res){
 });
 
 router.post('/uploadImg', function (req, res){
-  db(`insert into images(u_id, url) values(${req.body.u_id},"${req.body.url}");`)
+  db(`insert into images(u_id, image) values(${req.body.u_id},"${req.body.image}");`)
       .then(result => {
           console.log(result.data);
           res.status(201).send(result.data);
