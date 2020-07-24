@@ -1,8 +1,8 @@
 import React from 'react';
 import './getService.css'
 import MapView from "./MapView";
+import Gardening from './icons/Gardening.png'
 import { Alert, Button, Modal } from 'react-bootstrap';
-import Login from './Login'
 
 class GetService extends React.Component {
 
@@ -49,26 +49,10 @@ class GetService extends React.Component {
       });
   }
   handleServiceSelect(provider){
-      let cookieArr = [];
-      let cookieData = {};
-      if(document.cookie){
-          //userID=2; displayName=Naomi
-          //!sometimes userID is missing upon refresh
-          cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
-
-          cookieArr.forEach((e,i) => {
-              var data = e.split('=')
-              cookieData[data[0].trim()] = decodeURIComponent(data[1]);
-          })
-      }
-      if (cookieData.userID) {
-          this.setState({
-              showBooking: !this.state.showBooking,
-              clickedService: provider
-          });
-      } else {
-          this.setState({ shouldLogin: true })
-      }
+      this.setState({clickedService: provider});
+      this.setState({
+          showBooking: !this.state.showBooking
+      });
   }
   async handleBookSubmit(provider){
       console.log(provider);
@@ -94,8 +78,7 @@ class GetService extends React.Component {
               u_id: cookieData.userID,
               sp_id: provider.sp_id,
               book_date: this.state.date,
-              book_time: this.state.time,
-              service_owner_id: provider.service_owner_id
+              book_time: this.state.time
           })
       });
 
@@ -108,7 +91,7 @@ class GetService extends React.Component {
    {
        if(this.props.providersList.length < 1){
            return (
-               <div className="text-center m-5">
+               <div className="text-center">
                    <h1>Looks like there are no Do-ers in your area at the moment</h1>
                </div>
            )
