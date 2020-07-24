@@ -17,7 +17,7 @@ router.get('/logout', (req, res) => {
     req.session.notice = "Has been successfully been logged out!";
 });
 
-// TODO: User Registration
+// User Registration
 router.post('/register', async (req, res) => {
     // Check if user exists
     db(`SELECT * FROM users WHERE email = '${req.body.email}';`)

@@ -129,5 +129,5 @@ const authenticateUser = (email, password, done) => {
         })
 }
 
-// TODO: Local Strategy
+// Local Strategy
 passport.use(new LocalStrategy({usernameField: 'email'}, authenticateUser));
