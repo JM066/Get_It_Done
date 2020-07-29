@@ -71,7 +71,7 @@ class Main extends React.Component {
 
   showPosition = (position) => {
     const { latitude, longitude } = position.coords;
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
     .then(response =>  response.json()) 
     .then(data => {
       console.log(data.results[0])

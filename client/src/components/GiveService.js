@@ -93,33 +93,32 @@ class GiveService extends React.Component {
         images : images
       })
     }
-    handleUpload = () => {
-      let file = this.state.images;
-      let formData = new FormData();
-      console.log(formData, file)
-      formData.append('image', file)
-      fetch(`/services/uploadImg`, {
-        mode: 'no-cors',
-        method: 'POST',
-        body: JSON.stringify({
-          images: formData,
-          u_id: this.state.u_id
-        }) 
-      })                                                                                                                                                                                                       
-    .then(response => {   
-        // console.log(response)                                                                                                                                                            
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        return response;
-      }
-    })
-    .catch(e => {
-      console.log('There has been a problem with your fetch operation: ' + e.message);
-    });
-    }
+    // handleUpload = () => {
+    //   let file = this.state.images;
+    //   let formData = new FormData();
+    //   console.log(formData, file)
+    //   formData.append('image', file)
+    //   fetch(`/services/uploadImg`, {
+    //     mode: 'no-cors',
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       images: formData,
+    //       u_id: this.state.u_id
+    //     }) 
+    //   })                                                                                                                                                                                                       
+    // .then(response => {   
+    //     // console.log(response)                                                                                                                                                            
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   } else {
+    //     return response;
+    //   }
+    // })
+    // .catch(e => {
+    //   console.log('There has been a problem with your fetch operation: ' + e.message);
+    // });
+    // }
     setShow = () => {
-      console.log("arrive?")
       this.setState({
         show: !this.state.show,
         showSubmit: false
