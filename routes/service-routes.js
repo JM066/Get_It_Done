@@ -4,6 +4,7 @@ const db = require('../model/helper');
 const fetch = require('node-fetch');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const GOOGLE_API_KEY = process.env.REACT_APP_PLACE_API_KEY;
 
 //Get all ServiceProviders
 router.get('/', function (req, res, next) {

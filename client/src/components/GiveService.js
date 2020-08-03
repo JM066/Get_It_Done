@@ -2,6 +2,8 @@ import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { Alert, Button } from 'react-bootstrap';
 import './giveService.css';
+import { LengthRequired } from 'http-errors';
+import axios from "axios";
 
 class GiveService extends React.Component {
     constructor(props) {
@@ -75,16 +77,17 @@ class GiveService extends React.Component {
         let json = await response.json()
         console.log(json);
         this.setShow();
+        this.onFileSave();
     }
 
-    uploadImages = (e) => {
-      console.log(e.target.files[0])
+    onFileChange = (e) => {
       const {images} = this.state;
-      images.push(URL.createObjectURL(e.target.files[0]))
+      images.push(e.target.files[0])
       this.setState({
         images: images
       })
     }
+
     deleteImg = (e) => {
       const del = e.target.value;
       const images  = this.state.images
@@ -93,31 +96,25 @@ class GiveService extends React.Component {
         images : images
       })
     }
-    // handleUpload = () => {
-    //   let file = this.state.images;
-    //   let formData = new FormData();
-    //   console.log(formData, file)
-    //   formData.append('image', file)
-    //   fetch(`/services/uploadImg`, {
-    //     mode: 'no-cors',
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       images: formData,
-    //       u_id: this.state.u_id
-    //     }) 
-    //   })                                                                                                                                                                                                       
-    // .then(response => {   
-    //     // console.log(response)                                                                                                                                                            
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   } else {
-    //     return response;
-    //   }
-    // })
-    // .catch(e => {
-    //   console.log('There has been a problem with your fetch operation: ' + e.message);
-    // });
-    // }
+    
+    onFileSave = () => {
+      const formData = new FormData();
+      //Update the formData Object
+  
+      formData.append(`imagefile`, this.state.images[0])
+  
+      axios
+        .post(`/images`, formData, {
+          // data: {
+          //   u_id: this.state.u_id
+          // },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => console.log(res));
+      };                                                                                                                                                                                                   
+
     setShow = () => {
       this.setState({
         show: !this.state.show,
@@ -126,7 +123,7 @@ class GiveService extends React.Component {
       
     }
     render() {
-   
+     
         return (
             <div className="container align-content-center">
                 <div className="text-center mb-5"><h1><span className="border-bottom border-info">Become A Do-er Now</span></h1></div>
@@ -167,19 +164,19 @@ class GiveService extends React.Component {
                 </div>
                 <div class="input-group mb-3">
                   <div class="custom-file">
-                    <input type="file" onChange={(e) => {this.uploadImages(e)}}class="custom-file-input" id="inputGroupFile02"/>
+                    <input type="file" onChange={(e) => {this.onFileChange(e)}}class="custom-file-input" id="inputGroupFile02"/>
                     <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                   </div>
-                  <div class="input-group-append">
-                    <button class="input-group-text" onClick={() => {this.handleUpload()}}>Upload</button>
-                  </div>
+                  {/* <div class="input-group-append">
+                    <button class="input-group-text" onClick={() => {this.onPreview()}}>Preview</button>
+                  </div> */}
                 </div>
                     <div className="preview-container">
                        { this.state.images.map((item, index) => {
-                        
+                          const previewImg = URL.createObjectURL(item);
                             return (
                               <div className="x-button-container">
-                                <img src={item} key={index} value={index} className="upload-img"/>
+                                <img src={previewImg} key={index} value={index} className="upload-img"/>
                                 <button value={index} className="x-button" onClick={(e)=> this.deleteImg(e)}>X</button>
                               </div>
                             )

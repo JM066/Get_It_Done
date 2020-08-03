@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
+const fileUpload = require("express-fileupload");
 // const passportSetup = require('./config/passport-setup');
 
 // var indexRouter = require('./routes/index');
@@ -14,6 +15,7 @@ const authRouter = require('./routes/auth-routes');
 const profileRouter = require('./routes/profile-routes');
 const serviceRouter = require('./routes/service-routes');
 const usersRouter = require('./routes/user-routes');
+const imageRouter = require('./routes/images');
 
 const app = express();
 
@@ -49,7 +51,14 @@ app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/services', serviceRouter);
 app.use('/users', usersRouter);
-
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./tmp",
+  })
+)
+app.use("/images", imageRouter);
+app.use(express.static('public'));
 app.get('/', (req,res) => {
     res.render('home');
     // res.send("Welcome to the backend");
