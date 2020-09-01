@@ -89,14 +89,14 @@ router.post('/book', function (req, res){
         .catch(err => res.status(500).send(err))
 });
 
-router.post('/uploadImg', function (req, res){
-  db(`insert into images(u_id, image) values(${req.body.u_id},"${req.body.image}");`)
-      .then(result => {
-          console.log(result.data);
-          res.status(201).send(result.data);
-      })
-      .catch(err => res.status(500).send(err))
-});
+// router.post('/uploadImg', function (req, res){
+//   db(`insert into images(u_id, image) values(${req.body.u_id},"${req.body.image}");`)
+//       .then(result => {
+//           console.log(result.data);
+//           res.status(201).send(result.data);
+//       })
+//       .catch(err => res.status(500).send(err))
+// });
 
 //GET booking-history
 router.get('/booking-history/:id', function(req, res){
