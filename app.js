@@ -51,17 +51,18 @@ app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/services', serviceRouter);
 app.use('/users', usersRouter);
+app.use("/images", imageRouter);
 app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "./tmp",
   })
 )
-app.use("/images", imageRouter);
+
 app.use(express.static('public'));
 app.get('/', (req,res) => {
-    res.render('home');
-    // res.send("Welcome to the backend");
+    // res.render('home');
+    res.send("Welcome to the backend");
     // res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 

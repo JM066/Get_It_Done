@@ -2,6 +2,15 @@ var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
 
+// Get all users details
+router.get('/',  (req, res) => {
+  db(`SELECT * FROM users;`)
+      .then(result => {
+          res.send(result.data[0])
+      })
+      .catch(err => res.status(500).send(err))
+});
+
 // Get a user's details
 router.get('/:id',  (req, res) => {
     db(`SELECT * FROM users WHERE u_id=${req.params.id};`)

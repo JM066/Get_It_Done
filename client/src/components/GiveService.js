@@ -10,7 +10,7 @@ class GiveService extends React.Component {
         super(props)
         this.state = {
             userName: "",
-            serviceType: [],
+            // serviceType: [],
             u_id: 5,
             place_id: "",
             service_id: "1",
@@ -22,32 +22,39 @@ class GiveService extends React.Component {
             showSubmit: false
         }
     }
-    componentDidMount = () => {
-        this.getServiceType();
-        this.getCookies();
+    componentDidMount = async () => {
+      console.log("Cookies are: " + window.document.cookie);
+      let cookieString = window.document.cookie;
+      if(cookieString) {
+          let cookies = cookieString.split('; ');
+          console.log("Logged In");
+          console.log(cookies);
+          this.setState({u_id: cookies[0].split('=')[1]});
+          this.setState({userName: decodeURI(cookies[1].split('=')[1])});
+      }
     }
 
     //submission error???
-    getCookies(){
-        console.log("Cookies are: " + window.document.cookie);
-        let cookieString = window.document.cookie;
-        if(cookieString) {
-            let cookies = cookieString.split('; ');
-            console.log("Logged In");
-            console.log(cookies);
-            this.setState({u_id: cookies[0].split('=')[1]});
-            this.setState({userName: decodeURI(cookies[1].split('=')[1])});
-        }
-    }
+    // getCookies(){
+    //     console.log("Cookies are: " + window.document.cookie);
+    //     let cookieString = window.document.cookie;
+    //     if(cookieString) {
+    //         let cookies = cookieString.split('; ');
+    //         console.log("Logged In");
+    //         console.log(cookies);
+    //         this.setState({u_id: cookies[0].split('=')[1]});
+    //         this.setState({userName: decodeURI(cookies[1].split('=')[1])});
+    //     }
+    // }
 
-    getServiceType = async () => {
-        const serviceList = await fetch('/services/servicetype');
-        const serviceData = await serviceList.json();
-        console.log(serviceData);
-        this.setState({
-            serviceType: serviceData
-        })
-    }
+    // getServiceType = async () => {
+    //     const serviceList = await fetch('/services/servicetype');
+    //     const serviceData = await serviceList.json();
+    //     console.log(serviceData);
+    //     this.setState({
+    //         serviceType: serviceData
+    //     })
+    // }
 
     handleInputChange(event) {
         const value = event.target.value;
@@ -123,7 +130,7 @@ class GiveService extends React.Component {
       
     }
     render() {
-     
+      const { serviceType }  = this.props;
         return (
             <div className="container align-content-center">
                 <div className="text-center mb-5"><h1><span className="border-bottom border-info">Become A Do-er Now</span></h1></div>
@@ -137,7 +144,7 @@ class GiveService extends React.Component {
                     <div className="form-group col-md-6">
                         <label>Service Type</label>
                         <select className="custom-select rounded mb-2 mr-sm-2" name="service_id" onChange={(e) => this.handleInputChange(e)}>
-                            {this.state.serviceType.map(item => {
+                            {serviceType.map(item => {
                                     return <option key={item.st_id} value={item.st_id}>{item.service}</option>
                                 }
                             )}

@@ -15,15 +15,31 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      providers: []
+      providers: [],
+      serviceType: []
     }
   };
+
+  componentDidMount = async () => {
+    console.log("arrived")
+    const serviceList = await fetch('/services/servicetype');
+    const serviceData = await serviceList.json();
+    console.log(serviceData)
+    this.setState({
+      serviceType: serviceData
+    })
+   
+  }
   getProviders = (providersData) => {
     this.setState({
       providers: providersData
     })
   }
-
+  // nearbyProviders = (nearbyData) => {
+  //   this.setState({
+  //     providers: nearbyData
+  //   })
+  // }
   //repeated function?
     translateCookie = () => {
         let cookieArr = [];
@@ -64,13 +80,16 @@ class App extends React.Component {
                       </div>
                       </nav>
                   <Route exact path="/">
-                      <Main getProviders={(providersData) => this.getProviders(providersData)}/>
+                      <Main serviceType={this.state.serviceType} 
+                            getProviders={(providersData) => this.getProviders(providersData)}
+                            // nearbyProviders={(nearbyData) => this.nearbyProviders(nearbyData)}
+                            />
                   </Route>
                   <Route exact path="/getService">
-                      <GetService providersList = {this.state.providers} />
+                      <GetService providersList={this.state.providers} />
                   </Route>
                   <Route exact path="/services">
-                      <GiveService/>
+                      <GiveService serviceType={this.state.serviceType}/>
                   </Route>
                   <Route exact path="/map">
                       <MapView />

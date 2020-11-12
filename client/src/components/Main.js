@@ -11,36 +11,15 @@ class Main extends React.Component {
   constructor(props) {
     super(props) 
     this.state = {
-      serviceType: [],
-      filteredService: "1",
+      // serviceType: [],
+      filteredService: "",
       isSubmitted: "",
       locality: "",
       nearbyPlaceId: ""
     }
   }
 
-  componentDidMount = () => {
-    this.getServiceType();
-   
-  }
-
-
-  getServiceType = async () => {
-    const serviceList = await fetch('/services/servicetype');
-    const serviceData = await serviceList.json();
-    console.log(serviceData);
-    this.setState({
-      serviceType: serviceData
-    })
-  }
-  // handleService = (e) => {
-  //   const { value } = e.target; 
-  //   this.setState({
-  //     filteredService: value
-  //   })
-  // }
   handleSearch = async () => {
-
     const providerList = await fetch (`/services/servicebyidandloc/${this.state.filteredService}/${this.state.locality}`);
     const providersData = await providerList.json();
     this.props.getProviders(providersData);
@@ -48,44 +27,43 @@ class Main extends React.Component {
   }
 
   handleService = (e) => {
+    console.log(e.target)
     const serviceID = e.target.value;
     this.setState({
         filteredService: serviceID
     })
-  }
-  nearbySearch = async () => {
-    const nearbyProviders = await fetch (`/services`);
-    const nearbyData = await nearbyProviders.json();
-    this.props.getProviders(nearbyData)
-    this.props.history.push('/getService')
-  }
- 
-  getLocation = () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.showPosition);
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    } 
-    
-    }
+  } 
+  // getLocation = () => {
+  //   if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition(this.showPosition);
+  //   } else {
+  //     console.log("Geolocation is not supported by this browser.");
+  //   } 
+  //   }
 
-  showPosition = (position) => {
-    const { latitude, longitude } = position.coords;
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
-    .then(response =>  response.json()) 
-    .then(data => {
-      console.log(data.results[0])
-      const placeId = data.results[0].place_id;
-      console.log(placeId)
-      this.setState({
-       nearbyPlaceId: placeId
-      })
-    }) 
-    this.nearbySearch()
-    }
-   
+  // showPosition = (position) => {
+  //   const { latitude, longitude } = position.coords;
+  //   fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`)
+  //   .then(response =>  response.json()) 
+  //   .then(data => {
+  //     console.log(data.results[0])
+  //     const placeId = data.results[0].place_id;
+  //     console.log(placeId)
+  //     this.setState({
+  //      nearbyPlaceId: placeId
+  //     })
+  //   }) 
+  //   this.nearbySearch()
+  //   }
+
+  //   nearbySearch = async () => {
+  //     const nearbyProviders = await fetch (`/services`);
+  //     const nearbyData = await nearbyProviders.json();
+  //     this.props.nearbyProviders(nearbyData)
+  //     this.props.history.push('/getService')
+  //   }
     render() {
-      const serviceTypeID = this.state.serviceType
+      const { serviceType }  = this.props;
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">
                 <div className="container d-flex flex-column">
@@ -108,13 +86,13 @@ class Main extends React.Component {
                                         )}
                                         
                                     />
-                                    <select className="custom-select rounded mb-2 mr-sm-2" onChange={(e) => this.handleService(e)}>
-                                      {this.state.serviceType.map(item => {
+                                    <select className="custom-select rounded mb-2 mr-sm-2" onChange={this.handleService}>
+                                      {serviceType.map(item => {
                                         return <option key={item.st_id} value={item.st_id}>{item.service}</option>
                                       }
                                       )}
                                     </select>
-                                    <button className="btn btn-outline-success mb-2 btn-search" onClick={() => {this.handleSearch()}}>
+                                    <button className="btn btn-outline-success mb-2 btn-search" onClick={this.handleSearch}>
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd"
@@ -124,7 +102,7 @@ class Main extends React.Component {
                                         </svg>
                                         &nbsp;&nbsp;Search
                                     </button>
-                                    <button className="btn btn-outline-success mb-2 btn-search" onClick={() => {this.getLocation()}}>
+                                    <button className="btn btn-outline-success mb-2 btn-search">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd"

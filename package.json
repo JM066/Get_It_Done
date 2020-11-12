@@ -29,6 +29,7 @@
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.0",
     "node-gyp": "^7.0.0",
+    "node-pre-gyp": "^0.16.0",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",

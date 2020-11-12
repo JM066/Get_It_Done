@@ -18,19 +18,31 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 
+  let sql = "set foreign_key_checks = 0;";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table creation `items` was successful!");
+  });
   // Create userType table
-  let sql = "DROP TABLE if EXISTS userType; CREATE TABLE userType(ut_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, user_type VARCHAR(40) NOT NULL); INSERT INTO userType(user_type) VALUES ('Consumer'), ('Service Provider');";
+  sql = "DROP TABLE if EXISTS userType; CREATE TABLE userType(ut_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, user_type VARCHAR(40) NOT NULL); INSERT INTO userType(user_type) VALUES ('Consumer'), ('Service Provider');";
   con.query(sql, function (err, result) {
       if (err) throw err;
       console.log("Table creation `userType` was successful!");
   });
 
-    // Create serviceType table
-  sql = "DROP TABLE if EXISTS serviceType; CREATE TABLE serviceType(st_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, service VARCHAR(255) NOT NULL);";
-  con.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("Table creation `serviceType` was successful!");
-  });
+      // Create serviceType table
+      sql = "DROP TABLE if EXISTS serviceType; CREATE TABLE serviceType(st_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, service VARCHAR(255) NOT NULL);";
+      con.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("Table creation `serviceType` was successful!");
+      });
+
+    // Create serviceProviders table
+    sql = "DROP TABLE IF EXISTS serviceProviders; CREATE TABLE serviceProviders(sp_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, st_id INT NOT NULL, price INT NOT NULL, description VARCHAR(1000), loc_description VARCHAR(1000), loc_lat VARCHAR(500), loc_lng VARCHAR(500), loc_locality VARCHAR(500), FOREIGN KEY (u_id) REFERENCES users(u_id), FOREIGN KEY (st_id) REFERENCES serviceType(st_id));";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Table creation `serviceProviders` was successful!");
+    });
 
   // Insert Service Types
   sql = "INSERT INTO serviceType(service) VALUES ('Cleaning'),('Cooking'),('Gardening'),('Ironing'),('Plumbing');";
@@ -46,27 +58,40 @@ con.connect(function(err) {
       console.log("Table creation `users` was successful!");
   });
 
-  // Create serviceProviders table
-  sql = "DROP TABLE IF EXISTS serviceProviders; CREATE TABLE serviceProviders(sp_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, st_id INT NOT NULL, price INT NOT NULL, FOREIGN KEY (u_id) REFERENCES users(u_id), FOREIGN KEY (st_id) REFERENCES serviceType(st_id));";
+  sql = "INSERT INTO users(displayName, email, password, ut_id, profile_img) VALUES ('Mina', 'mina.arait@gmail.com', 'minapassword123', 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6FkUVFp9_KQ-a9_7aZAE5USMAFY23NaTZKA&usqp=CAU');";
   con.query(sql, function (err, result) {
       if (err) throw err;
-      console.log("Table creation `serviceProviders` was successful!");
+      console.log("Insert into `users` was successful!");
   });
-
+  sql = "INSERT INTO users(displayName, email, password, ut_id, profile_img) VALUES ('Mina', 'mina.arait@gmail.com', 'minapassword123', 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6FkUVFp9_KQ-a9_7aZAE5USMAFY23NaTZKA&usqp=CAU');";
+  con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Insert into `users` was successful!");
+  });
+  sql = "INSERT INTO users(displayName, email, password, ut_id, profile_img) VALUES ('Mina', 'mina.arait@gmail.com', 'minapassword123', 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6FkUVFp9_KQ-a9_7aZAE5USMAFY23NaTZKA&usqp=CAU');";
+  con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Insert into `users` was successful!");
+  });
+  
   // Create orders table
-  sql = "DROP TABLE IF EXISTS orders; CREATE TABLE orders(o_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, sp_id INT NOT NULL, order_date DATETIME default CURRENT_TIMESTAMP NOT NULL, FOREIGN KEY(u_id) REFERENCES users(u_id), FOREIGN KEY (sp_id) REFERENCES serviceProviders(sp_id));";
-  con.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("Table creation `orders` was successful!");
-  });
-  sql = "DROP TABLE IF EXISTS images; CREATE TABLE images(u_id INT NOT NULL, image VARCHAR(255), FOREIGN KEY(u_id) REFERENCES users(u_id));";
-  con.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("Table creation `images` was successful!");
-  });
+    sql = "DROP TABLE IF EXISTS orders; CREATE TABLE orders(o_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, sp_id INT NOT NULL, order_date DATETIME default CURRENT_TIMESTAMP NOT NULL, FOREIGN KEY(u_id) REFERENCES users(u_id), FOREIGN KEY (sp_id) REFERENCES serviceProviders(sp_id));";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Table creation `orders` was successful!");
+    });
+  // sql = "DROP TABLE IF EXISTS images; CREATE TABLE images(u_id INT NOT NULL, image VARCHAR(255), FOREIGN KEY(u_id) REFERENCES users(u_id));";
+  // con.query(sql, function (err, result) {
+  //     if (err) throw err;
+  //     console.log("Table creation `images` was successful!");
+  // });
 
   console.log("Closing...");
-
+  sql = "set foreign_key_checks = 1;";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table creation `items` was successful!");
+  });
   con.end();
 });
 

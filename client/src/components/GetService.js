@@ -86,10 +86,9 @@ class GetService extends React.Component {
       console.log(json);
       this.setShow();
   }
-
-  render()
-   {
-       if(this.props.providersList.length < 1){
+  render() {
+    const { providersList } = this.props;
+    if(providersList.length < 1){
            return (
                <div className="text-center">
                    <h1>Looks like there are no Do-ers in your area at the moment</h1>
@@ -100,7 +99,7 @@ class GetService extends React.Component {
            style: "currency",
            currency: "USD"
        };
-
+       
        return (
            <div className="position-relative overflow-hidden">
                <div className="text-center mb-5"><h1><span>Do-ers in {this.state.searchLocality}</span></h1></div>
@@ -121,7 +120,7 @@ class GetService extends React.Component {
                <div className="row border border-secondary">
 
                    <div className="col-md-5">
-                       {this.props.providersList.map(data => {
+                       {providersList.map(data => {
                            const currency = data.price.toLocaleString('en-US', usDollar)
                            return (
                                <div className="card">

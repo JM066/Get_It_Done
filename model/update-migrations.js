@@ -24,6 +24,14 @@ con.connect(function(err) {
         if (err) throw err;
         console.log("Altered `orders` table");
     });
+
+    
+    // Alter users
+    // let sql = "alter table users add image VARCHAR(255); ";
+    // con.query(sql, function (err, result) {
+    //     if (err) throw err;
+    //     console.log("Altered `orders` table");
+    // });
     
     console.log("Closing...");
 
