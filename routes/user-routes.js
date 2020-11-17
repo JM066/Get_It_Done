@@ -29,7 +29,7 @@ router.get('/services/:id',  (req, res) => {
             inner join serviceProviders on users.u_id = serviceProviders.u_id
             inner join serviceType on serviceProviders.st_id = serviceType.st_id
 
-            where users.u_id=${req.params.id};
+            where users.u_id=${req.params.id} AND availability=TRUE;
     `).then(result => {
             res.send(result.data)
         })
@@ -37,22 +37,15 @@ router.get('/services/:id',  (req, res) => {
 });
 
 //Delete a service offered by the person
-router.delete('/services/:id',  (req, res) => {
-    
-    db(`DELETE FROM serviceProviders WHERE sp_id = ${req.params.id} AND u_id = ${req.body.u_id};`)
-        .then(results => {
-        if (results.error) {
-            res.status(404).send({ error: results.error });
-        } 
-        else {
-            db(`select 
-        serviceType.st_id as 'st_id', 
-        sp_id, service, description, price, loc_description 
-        from users 
-        inner join serviceProviders on users.u_id = serviceProviders.u_id 
-        inner join serviceType on serviceProviders.st_id = serviceType.st_id 
-        where users.u_id=${req.body.u_id};
-        `)
+router.put('/services/:id',  (req, res) => {
+    db(`SELECT * from serviceProviders WHERE sp_id = ${req.params.id} AND u_id = ${req.body.u_id};`)
+    .then(results => {
+      if (results.error) {
+          res.status(404).send({ error: results.error });
+      } 
+      else {
+          db(`UPDATE serviceProviders SET availability=FALSE WHERE sp_id = ${req.params.id} AND u_id = ${req.body.u_id};`)
+
                 .then(result => {
                     res
                         .status(200)

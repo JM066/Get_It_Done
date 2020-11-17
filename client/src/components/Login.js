@@ -24,8 +24,7 @@ export default class Login extends Component {
       let cookieArr = [];
       let cookieData = {};
       if(document.cookie){
-          // pageCookie = document.cookie}`;
-          //userID=2; displayName=Naomi; profile_img
+  
           cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
           console.log(cookieArr)
           cookieArr.forEach((e,i) => {

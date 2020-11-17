@@ -33,7 +33,7 @@ router.get('/servicebyidandloc/:serviceTypeID/:placeID', async function (req, re
     let placeDetails = {
         locality: json.result.address_components[1].long_name,
     }
-    db(`select sp_id, service as 'service_type', price, loc_description, loc_lat, loc_lng, loc_locality, description, serviceProviders.u_id as 'service_owner_id', displayName as 'service_owner', profile_img from (serviceProviders inner join users on serviceProviders.u_id = users.u_id) inner join serviceType on serviceProviders.st_id = serviceType.st_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${placeDetails.locality}";`)
+    db(`select sp_id, service as 'service_type', price, loc_description, loc_lat, loc_lng, loc_locality, description, serviceProviders.u_id as 'service_owner_id', displayName as 'service_owner', profile_img from (serviceProviders inner join users on serviceProviders.u_id = users.u_id) inner join serviceType on serviceProviders.st_id = serviceType.st_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${placeDetails.locality}" and availability=TRUE;`)
         .then(result => {
             // console.log(result.data);
             res.status(200).send(result.data);
@@ -52,7 +52,7 @@ router.post('/add', async function (req, res, next) {
         lng: json.result.geometry.location.lng
     }
     // console.log(placeDetails);
-    db(`insert into serviceProviders(u_id,st_id,price,description,loc_description,loc_lat,loc_lng,loc_locality) values(${req.body.u_id}, ${req.body.st_id}, ${req.body.price}, "${req.body.description}", '${placeDetails.full_address}', '${placeDetails.lat}', '${placeDetails.lng}', '${placeDetails.locality}');`)
+    db(`insert into serviceProviders(u_id,st_id,price,description, availability, loc_description, loc_lat,loc_lng,loc_locality) values(${req.body.u_id}, ${req.body.st_id}, ${req.body.price}, "${req.body.description}", ${req.body.availability}, '${placeDetails.full_address}', '${placeDetails.lat}', '${placeDetails.lng}', '${placeDetails.locality}');`)
         .then(result => {
             console.log(result.data);
             res.status(200).send(result.data);

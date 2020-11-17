@@ -29,35 +29,9 @@ class Profile extends Component {
             })
 
     }
-
-    // deleteService = id => {
-    //   console.log(id)
-    //     fetch(`/users/services/${id}`, {
-    //         method: "DELETE",
-    //         headers: {
-    //             "Content-type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             u_id: this.state.userData.userID,
-    //         })
-
-    //     })
-    //         .then(res => res.json())
-    //         .then(res => {
-
-    //             this.setState({ 
-    //               // bookingData: prev.bookingData.filter(book => book.id !== id),
-    //               profileData: this.state.profileData.filter(data => data.sp_id !== id)
-
-    //             })
-    //         });
-    //     document.location.reload();
-    // };
-
-//not working, map not a function but upon refresh works
     deleteService = id => {
         fetch(`/users/services/${id}`, {
-            method: "DELETE",
+            method: "PUT",
             headers: {
                 "Content-type": "application/json"
             },
@@ -67,7 +41,9 @@ class Profile extends Component {
     
         })
             .then(res => res.json())
-            .then(json => this.setState({bookingData: json}));
+            .then(json => this.setState({
+              profileData: this.state.profileData.filter(data => data.sp_id !== id)})
+            );
     };
 
     get = async () => {
@@ -80,8 +56,8 @@ class Profile extends Component {
         return (
             <div className="container">
                 <div className="container text-center">
-                    <img src={this.state.userData.profile_img} className="img-fluid mb-2"/>
-                    {/*TODO Being able to update image*/}
+                    {/* <img src={this.state.userData.profile_img} className="img-fluid mb-2"/>
+                    TODO Being able to update image */}
                     <h3>Welcome back, {this.state.userData.displayName}!</h3>
                 </div>
                 <span>
@@ -95,7 +71,6 @@ class Profile extends Component {
                                 <div className="col">
                                     <div className="card border-light">
                                         {this.state.profileData.map((e, i) => {
-                                           console.log(e.sp_id)
                                             return (
                                                 <div className="card">
                                                     <h5 className="card-header btn-info d-flex justify-content-between">{e.service}
@@ -140,7 +115,6 @@ class Profile extends Component {
                                             // date = date.split("/").join(".")
                                             // let date = new Date(e.book_date).toLocaleDateString('ko-KR')
                                             // date = date.slice(0, date.length - 1)
-
                                             return (
                                                 <div className="card">
                                                     <h5 className="card-header btn-info">{e.service}</h5>

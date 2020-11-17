@@ -34,18 +34,6 @@ class GiveService extends React.Component {
       }
     }
 
-    //submission error???
-    // getCookies(){
-    //     console.log("Cookies are: " + window.document.cookie);
-    //     let cookieString = window.document.cookie;
-    //     if(cookieString) {
-    //         let cookies = cookieString.split('; ');
-    //         console.log("Logged In");
-    //         console.log(cookies);
-    //         this.setState({u_id: cookies[0].split('=')[1]});
-    //         this.setState({userName: decodeURI(cookies[1].split('=')[1])});
-    //     }
-    // }
 
     // getServiceType = async () => {
     //     const serviceList = await fetch('/services/servicetype');
@@ -76,6 +64,7 @@ class GiveService extends React.Component {
                 st_id: this.state.service_id,
                 price: this.state.price,
                 description: this.state.description,
+                availability: true,
                 contact: this.state.contact,
                 place_id: this.state.place_id
             })

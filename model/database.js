@@ -38,7 +38,7 @@ con.connect(function(err) {
       });
 
     // Create serviceProviders table
-    sql = "DROP TABLE IF EXISTS serviceProviders; CREATE TABLE serviceProviders(sp_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, st_id INT NOT NULL, price INT NOT NULL, description VARCHAR(1000), loc_description VARCHAR(1000), loc_lat VARCHAR(500), loc_lng VARCHAR(500), loc_locality VARCHAR(500), FOREIGN KEY (u_id) REFERENCES users(u_id), FOREIGN KEY (st_id) REFERENCES serviceType(st_id));";
+    sql = "DROP TABLE IF EXISTS serviceProviders; CREATE TABLE serviceProviders(sp_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, st_id INT NOT NULL, price INT NOT NULL, description VARCHAR(1000), availability BOOLEAN, loc_description VARCHAR(1000), loc_lat VARCHAR(500), loc_lng VARCHAR(500), loc_locality VARCHAR(500), FOREIGN KEY (u_id) REFERENCES users(u_id), FOREIGN KEY (st_id) REFERENCES serviceType(st_id));";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table creation `serviceProviders` was successful!");

@@ -41,7 +41,7 @@ fs.rename(tmp_path, target_path, function (err) {
 }) ;
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  db(`SELECT * FROM images WHERE id = ${id}`)
+  db(`SELECT * FROM images WHERE id = ${id};`)
   .then(results => {
     const filename = results.data[0].image
     const pathToDelete = path.join(_dirname, "../public/img/") + filename;
