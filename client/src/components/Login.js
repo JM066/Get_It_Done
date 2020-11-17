@@ -14,8 +14,8 @@ export default class Login extends Component {
       email: "",
       password: "",
       errorMessage: "",
-        username: "",
-        profileimg:"",
+      username: "",
+      profileimg: "",
     };
   }
 
@@ -27,16 +27,20 @@ export default class Login extends Component {
           // pageCookie = document.cookie}`;
           //userID=2; displayName=Naomi; profile_img
           cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
-
+          console.log(cookieArr)
           cookieArr.forEach((e,i) => {
               var data = e.split('=')
               cookieData[data[0].trim()] = decodeURIComponent(data[1]);
           })
-
           this.setState({
-              username: cookieData.displayName,
-              profileimg: cookieData.profile_img
+            username: cookieData.displayName,
+            // profileimg: cookieData.profile_img
           })
+          if (cookieData.profile_img !== null) {
+            this.setState({
+              profileimg: cookieData.profile_img
+            })
+          }
           // console.log(cookieData)
       }
   }
@@ -146,7 +150,7 @@ export default class Login extends Component {
               <>
                   <li className="nav-item mx-2 pt-1">
                       <Link to="/profile">
-                          <a className="rounded px-3 btn btn-md btn-light" ><img src= {this.state.profileimg} className="img-fluid-sm"/> {this.state.username} </a>
+                      <a className="rounded px-3 btn btn-md btn-light" >{this.state.username} </a>
                       </Link>
                   </li>
                   <Route render={({ history}) => (

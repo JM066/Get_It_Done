@@ -39,10 +39,12 @@ router.get('/services/:id',  (req, res) => {
 //Delete a service offered by the person
 router.delete('/services/:id',  (req, res) => {
     
-    db(`DELETE FROM serviceproviders WHERE sp_id = ${req.params.id} AND u_id = ${req.body.u_id};`).then(results => {
+    db(`DELETE FROM serviceProviders WHERE sp_id = ${req.params.id} AND u_id = ${req.body.u_id};`)
+        .then(results => {
         if (results.error) {
             res.status(404).send({ error: results.error });
-        } else {
+        } 
+        else {
             db(`select 
         serviceType.st_id as 'st_id', 
         sp_id, service, description, price, loc_description 

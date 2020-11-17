@@ -30,7 +30,7 @@ class GiveService extends React.Component {
           console.log("Logged In");
           console.log(cookies);
           this.setState({u_id: cookies[0].split('=')[1]});
-          this.setState({userName: decodeURI(cookies[1].split('=')[1])});
+          // this.setState({userName: decodeURI(cookies[0].split('=')[1])});
       }
     }
 

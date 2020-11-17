@@ -30,6 +30,31 @@ class Profile extends Component {
 
     }
 
+    // deleteService = id => {
+    //   console.log(id)
+    //     fetch(`/users/services/${id}`, {
+    //         method: "DELETE",
+    //         headers: {
+    //             "Content-type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             u_id: this.state.userData.userID,
+    //         })
+
+    //     })
+    //         .then(res => res.json())
+    //         .then(res => {
+
+    //             this.setState({ 
+    //               // bookingData: prev.bookingData.filter(book => book.id !== id),
+    //               profileData: this.state.profileData.filter(data => data.sp_id !== id)
+
+    //             })
+    //         });
+    //     document.location.reload();
+    // };
+
+//not working, map not a function but upon refresh works
     deleteService = id => {
         fetch(`/users/services/${id}`, {
             method: "DELETE",
@@ -39,31 +64,11 @@ class Profile extends Component {
             body: JSON.stringify({
                 u_id: this.state.userData.userID,
             })
-
+    
         })
             .then(res => res.json())
-            .then(res => {
-
-                this.setState(prev => ({ bookingData: prev.bookingData.filter(book => book.id !== id) }))
-            });
-        document.location.reload();
+            .then(json => this.setState({bookingData: json}));
     };
-
-//not working, map not a function but upon refresh works
-    // deleteService = id => {
-    //     fetch(`/users/services/${id}`, {
-    //         method: "DELETE",
-    //         headers: {
-    //             "Content-type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             u_id: this.state.userData.userID,
-    //         })
-    //
-    //     })
-    //         .then(res => res.json())
-    //         .then(json => this.setState({bookingData: json}));
-    // };
 
     get = async () => {
         // const profileData = await fetch (`/services/${this.translateCookie().userID}`);
@@ -90,6 +95,7 @@ class Profile extends Component {
                                 <div className="col">
                                     <div className="card border-light">
                                         {this.state.profileData.map((e, i) => {
+                                           console.log(e.sp_id)
                                             return (
                                                 <div className="card">
                                                     <h5 className="card-header btn-info d-flex justify-content-between">{e.service}

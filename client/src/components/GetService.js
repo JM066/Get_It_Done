@@ -123,11 +123,11 @@ class GetService extends React.Component {
                        {providersList.map(data => {
                            const currency = data.price.toLocaleString('en-US', usDollar)
                            return (
-                               <div className="card">
+                               <div className="card" style={{marginLeft: '30px'}}>
                                    <div className="card-body mb-4">
                                        <div className="row">
                                            <div className="media">
-                                               <img src={data.profile_img} className="mr-3" alt={data.service_owner}/>
+                                               {/* <img src={data.profile_img} className="mr-3" alt={data.service_owner}/> */}
                                                <div className="media-body">
                                                    <h5 className="mt-0">{data.service_owner} <img
                                                        src={`./icons/${data.service_type}.png`}
