@@ -38,7 +38,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-// app.use(express.static(path.join(__dirname, 'client/build')));
+//all the static assets will be located in client build 
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //Initialise passport
 app.use(passport.initialize());
@@ -65,7 +66,10 @@ app.get('/', (req,res) => {
     res.send("Welcome to the backend");
     // res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-
+//send all the routes to client/build/index.html file
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

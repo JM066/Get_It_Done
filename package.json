@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "migrate": "node model/database.js",
-    "migrate-update": "node model/update-migrations.js"
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.2",

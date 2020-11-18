@@ -15,10 +15,11 @@ class Main extends React.Component {
       filteredService: "",
       isSubmitted: "",
       locality: "",
-      nearbyPlaceId: ""
+      nearbyPlaceId: "",
+      reload: false
     }
   }
-
+  
   handleSearch = async () => {
     const providerList = await fetch (`/services/servicebyidandloc/${this.state.filteredService}/${this.state.locality}`);
     const providersData = await providerList.json();
@@ -64,6 +65,15 @@ class Main extends React.Component {
   //   }
     render() {
       const { serviceType }  = this.props;
+      const googlePlace = (<GooglePlacesAutocomplete
+      apiKey={GOOGLE_API_KEY}
+      inputClassName="form-control rounded mb-2 mr-sm-2"
+      onSelect={({ place_id }) => (
+        
+        this.setState({ locality : place_id})
+      )}
+      
+  />)
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">
                 <div className="container d-flex flex-column">
@@ -77,15 +87,16 @@ class Main extends React.Component {
                             <p>Find a Do-er now</p>
                             <div>
                                 <div className="input-group mb-3">
-                                    <GooglePlacesAutocomplete
-                                        apiKey="AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y"
+                                    {/* <GooglePlacesAutocomplete
+                                        apiKey={GOOGLE_API_KEY}
                                         inputClassName="form-control rounded mb-2 mr-sm-2"
                                         onSelect={({ place_id }) => (
                                           
                                           this.setState({ locality : place_id})
                                         )}
                                         
-                                    />
+                                    /> */}
+                                    {googlePlace}
                                     <select className="custom-select rounded mb-2 mr-sm-2" onChange={this.handleService}>
                                       {serviceType.map(item => {
                                         return <option key={item.st_id} value={item.st_id}>{item.service}</option>

@@ -149,7 +149,7 @@ export default class Login extends Component {
               <>
                   <li className="nav-item mx-2 pt-1">
                       <Link to="/profile">
-                      <a className="rounded px-3 btn btn-md btn-light" >{this.state.username} </a>
+                      <a className="rounded px-3 btn btn-md btn-light" >`${this.state.username}'s page`</a>
                       </Link>
                   </li>
                   <Route render={({ history}) => (
