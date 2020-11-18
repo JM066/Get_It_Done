@@ -75,7 +75,7 @@ con.connect(function(err) {
   });
   
   // Create orders table
-    sql = "DROP TABLE IF EXISTS orders; CREATE TABLE orders(o_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, sp_id INT NOT NULL, order_date DATETIME default CURRENT_TIMESTAMP NOT NULL, FOREIGN KEY(u_id) REFERENCES users(u_id), FOREIGN KEY (sp_id) REFERENCES serviceProviders(sp_id));";
+    sql = "DROP TABLE IF EXISTS orders; CREATE TABLE orders(o_id INT AUTO_INCREMENT PRIMARY KEY, u_id INT NOT NULL, sp_id INT NOT NULL, order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(u_id) REFERENCES users(u_id), FOREIGN KEY (sp_id) REFERENCES serviceProviders(sp_id));";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table creation `orders` was successful!");
