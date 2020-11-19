@@ -1,6 +1,4 @@
 import React from 'react';
-
-// import {withRouter} from "react-router-dom";
 import './mapView.css';
 import {Map, Marker, TileLayer, Popup} from "react-leaflet";
 

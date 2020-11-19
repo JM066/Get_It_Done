@@ -4,7 +4,7 @@ import 'react-google-places-autocomplete/dist/index.min.css';
 import './main.css';
 import { withRouter } from "react-router-dom";
 const GOOGLE_API_KEY = process.env.REACT_APP_PLACE_API_KEY;
-
+   // "react-responsive-modal": "^5.0.2",
 
 class Main extends React.Component {
 
@@ -113,7 +113,7 @@ class Main extends React.Component {
                                         </svg>
                                         &nbsp;&nbsp;Search
                                     </button>
-                                    <button className="btn btn-outline-success mb-2 btn-search">
+                                    {/* <button className="btn btn-outline-success mb-2 btn-search">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd"
@@ -122,7 +122,7 @@ class Main extends React.Component {
                                                   d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
                                         </svg>
                                         &nbsp;&nbsp;Search Nearby
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>

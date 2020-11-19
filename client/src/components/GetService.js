@@ -1,7 +1,7 @@
 import React from 'react';
 import './getService.css'
 import MapView from "./MapView";
-import Gardening from './icons/Gardening.png'
+// import Gardening from './icons/Gardening.png'
 import { Alert, Button, Modal } from 'react-bootstrap';
 
 class GetService extends React.Component {

@@ -139,7 +139,7 @@ export default class Login extends Component {
               )} />
               <Route path="/services" render={({ history }) => (
                   <Link to={"/"}>
-                      <p>go back to homepage<img src="https://img.icons8.com/cotton/64/000000/home--v3.png" className="img-home"/></p>
+                      <p>Go back to homepage<img src="https://img.icons8.com/cotton/64/000000/home--v3.png" className="img-home"/></p>
                   </Link>
                   )}/>
           </li>
@@ -149,7 +149,7 @@ export default class Login extends Component {
               <>
                   <li className="nav-item mx-2 pt-1">
                       <Link to="/profile">
-                      <a className="rounded px-3 btn btn-md btn-light" >`${this.state.username}'s page`</a>
+                      <a className="rounded px-3 btn btn-md btn-light" >{this.state.username}'s page</a>
                       </Link>
                   </li>
                   <Route render={({ history}) => (

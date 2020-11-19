@@ -2,8 +2,8 @@ import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { Alert, Button } from 'react-bootstrap';
 import './giveService.css';
-import { LengthRequired } from 'http-errors';
-import axios from "axios";
+// import { LengthRequired } from 'http-errors';
+// import axios from "axios";
 
 class GiveService extends React.Component {
     constructor(props) {
@@ -73,7 +73,7 @@ class GiveService extends React.Component {
         let json = await response.json()
         console.log(json);
         this.setShow();
-        this.onFileSave();
+        // this.onFileSave();
     }
 
     onFileChange = (e) => {
@@ -93,23 +93,23 @@ class GiveService extends React.Component {
       })
     }
     
-    onFileSave = () => {
-      const formData = new FormData();
-      //Update the formData Object
+    // onFileSave = () => {
+    //   const formData = new FormData();
+    //   //Update the formData Object
   
-      formData.append(`imagefile`, this.state.images[0])
+    //   formData.append(`imagefile`, this.state.images[0])
   
-      axios
-        .post(`/images`, formData, {
-          // data: {
-          //   u_id: this.state.u_id
-          // },
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => console.log(res));
-      };                                                                                                                                                                                                   
+      // axios
+      //   .post(`/images`, formData, {
+      //     // data: {
+      //     //   u_id: this.state.u_id
+      //     // },
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   })
+      //   .then((res) => console.log(res));
+      // };                                                                                                                                                                                                   
 
     setShow = () => {
       this.setState({
