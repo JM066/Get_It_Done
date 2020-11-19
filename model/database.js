@@ -6,24 +6,13 @@ const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 
-pool = mysql.createPool({
-  connectionLimit : 1000,
-  connectTimeout: 60 * 60 * 1000,
-  acquireTimeout: 60 * 60 * 1000,
-  timeout: 60 * 60 * 1000,
+const con = mysql.createConnection({
   host: DB_HOST || "127.0.0.1",
   user: DB_USER || "root",
   password: DB_PASS,
   database: DB_NAME || "get_it_done",
   multipleStatements: true
-})
-// const con = mysql.createConnection({
-//   host: DB_HOST || "127.0.0.1",
-//   user: DB_USER || "root",
-//   password: DB_PASS,
-//   database: DB_NAME || "get_it_done",
-//   multipleStatements: true
-// });
+});
 
 con.connect(function(err) {
   if (err) throw err;
