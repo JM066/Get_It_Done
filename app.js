@@ -25,14 +25,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.set('port', (process.env.PORT || 5000));
-
-//For avoidong Heroku $PORT error
-app.get('/', function(request, response) {
-    var result = 'App is running'
-    response.send(result);
-}).listen(app.get('port'), function() {
-    console.log('App is running, server is listening on port ', app.get('port'));
+//send all the routes to client/build/index.html file
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
+//For avoidong Heroku $PORT error
+// app.get('/', function(request, response) {
+//     var result = 'App is running'
+//     response.send(result);
+// }).listen(app.get('port'), function() {
+//     console.log('App is running, server is listening on port ', app.get('port'));
+// });
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -71,10 +74,7 @@ app.use(express.static('public'));
 //     res.send("Welcome to the backend");
 //     // res.sendFile(path.join(__dirname, 'build', 'index.html'));
 // });
-//send all the routes to client/build/index.html file
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
