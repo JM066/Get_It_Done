@@ -39,7 +39,7 @@ app.use(session({
     saveUninitialized: false
 }));
 //all the static assets will be located in client build 
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '/client/build')));
 
 //Initialise passport
 app.use(passport.initialize());
