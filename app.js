@@ -24,10 +24,15 @@ app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 app.set('view engine', 'ejs');
 
-// app.use(cookieSession({
-//     maxAge: 24 * 60 * 60 * 1000,
-//     keys: [process.env.COOKIE_KEY]
-// }));
+app.set('port', (process.env.PORT || 5000));
+
+//For avoidong Heroku $PORT error
+app.get('/', function(request, response) {
+    var result = 'App is running'
+    response.send(result);
+}).listen(app.get('port'), function() {
+    console.log('App is running, server is listening on port ', app.get('port'));
+});
 
 app.use(logger('dev'));
 app.use(express.json());
