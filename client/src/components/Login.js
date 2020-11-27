@@ -24,7 +24,6 @@ export default class Login extends Component {
       let cookieArr = [];
       let cookieData = {};
       if(document.cookie){
-  
           cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
           console.log(cookieArr)
           cookieArr.forEach((e,i) => {
@@ -70,13 +69,17 @@ export default class Login extends Component {
             password: this.state.password
         })
     })
-    .then(response => response.json())
-    .then(json => {
-        console.log(json);
+    .then(response => response.text())
+    .then(text => {
+        console.log(text);
+        this.setState({
+          username: text
+        })
     })
     .catch(err => console.log(err));
+  
     this.handleModelLogin()
-    document.location.reload();
+    // document.location.reload();
   }
 
   handleSignUp = async () => {
@@ -120,7 +123,6 @@ export default class Login extends Component {
   }
 
   render() {
-
     return (
       <>
           {/*TODO try nav bar*/}
@@ -184,7 +186,7 @@ export default class Login extends Component {
                           <button className="btn btn-success rounded " onClick={() => {this.handleSignUp()}}>Signup</button>
                       </div>
                   </div>
-                  <div className="container">
+                  {/* <div className="container">
                       <div className="form-row">
                           <div className="form-group col-md-6 col-sm-6">
                               <a href='http://localhost:5000/auth/facebook' className="btn btn-md btn-primary rounded"><i className="fab fa-facebook-f"></i>&nbsp;&nbsp;Sign up with Facebook</a>
@@ -193,7 +195,7 @@ export default class Login extends Component {
                               <a href='http://localhost:5000/auth/google' className="btn btn-md btn-danger rounded"><i className="fa fa-google"></i>&nbsp;&nbsp;Sign up with Google</a>
                           </div>
                       </div>
-                  </div>
+                  </div> */}
               </Modal.Body>
          </Modal> 
 
@@ -218,14 +220,14 @@ export default class Login extends Component {
                      <div className="form-group">
                          <button className="btn btn-md btn-success rounded" onClick={() => {this.handleLogin()}}>Login</button>
                      </div>
-                     <div className="form-row">
+                     {/* <div className="form-row">
                          <div className="form-group col-md-6 col-sm-6">
                              <a href='http://localhost:5000/auth/facebook' className="btn btn-md btn-primary rounded"><i className="fab fa-facebook-f"></i> Login with Facebook</a>
                          </div>
                          <div className="form-group col-md-6 col-sm-6">
                              <a href='http://localhost:5000/auth/google' className="btn btn-md btn-danger rounded"><i className="fa fa-google"></i> Login with Google</a>
                          </div>
-                     </div>
+                     </div> */}
                  </div>
              </Modal.Body>
          </Modal>
