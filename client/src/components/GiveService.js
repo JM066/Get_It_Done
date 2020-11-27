@@ -120,6 +120,11 @@ class GiveService extends React.Component {
     }
     render() {
       const { serviceType }  = this.props;
+      const googlePlace = (<GooglePlacesAutocomplete
+      apiKey="AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y"
+      inputClassName="form-control"
+      onSelect={({ place_id }) => (this.setState({ place_id: place_id}))}
+      />)
         return (
             <div className="container align-content-center">
                 <div className="text-center mb-5"><h1><span className="border-bottom border-info">Become A Do-er Now</span></h1></div>
@@ -141,11 +146,12 @@ class GiveService extends React.Component {
                     </div>
                     <div className="form-group col-md-6">
                         <label>Location</label>
-                        <GooglePlacesAutocomplete
+                        {googlePlace}
+                        {/* <GooglePlacesAutocomplete
                             apiKey="AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y"
                             inputClassName="form-control"
                             onSelect={({ place_id }) => (this.setState({ place_id: place_id}))}
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="form-row">
