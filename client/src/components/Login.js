@@ -69,17 +69,14 @@ export default class Login extends Component {
             password: this.state.password
         })
     })
-    .then(response => response.text())
-    .then(text => {
-        console.log(text);
-        this.setState({
-          username: text
-        })
+    .then(response => response.json())
+    .then(json => {
+        console.log(json);
     })
     .catch(err => console.log(err));
   
     this.handleModelLogin()
-    // document.location.reload();
+    document.location.reload();
   }
 
   handleSignUp = async () => {

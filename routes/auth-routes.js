@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const db = require('../model/helper');
 // const {body, validationResult, expressValidator } = require("express-validator");
 const bcrypt = require('bcrypt');
-// const passport = require('passport');
+const passport = require('passport');
 const FE_URL=process.env.FE_URL;
 const saltRounds = 10;
 router.use(bodyParser.json());
@@ -56,54 +56,41 @@ router.post('/register', async (req, res) => {
 
 
 //auth login
-// router.post('/login', passport.authenticate('local', {
-//     successRedirect: '/auth/login/redirect',
-//     failureRedirect: '/'
-// }));
-router.post('/login', async (req, res, next) => {
-  db(`SELECT * FROM users WHERE email = '${req.body.email}';`)
-  .then(async result => {
-    let parsedResult = JSON.parse(JSON.stringify(result))
-    // let data = JSON.parse(JSON.stringify(result))
-    // if (!result) {
-    //   res.status(404).send({error: result.error});
-    //   return;
-    // }
-     if (parsedResult.data[0].password) {
-      bcrypt.compare(req.body.password, parsedResult.data[0].password, function (err, result) {
-              if (result == true) {
-                  res.send(parsedResult.data[0].displayName);
-                  res.clearCookie('userID');
-                  res.clearCookie('displayName');
-                  res.clearCookie('profile_img');
-                  let user = parsedResult.data[0];
-                  console.log("FROM AUTH/LOGIN");
-                  console.log(user);
-                  res.cookie('userID', `${user.u_id}`, {maxAge: 3600000});
-                  res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
-                  res.cookie('profile_img', `${user.profile_img}`, {maxAge: 3600000});
-                  res.redirect(`${FE_URL}/`);
-              } else {
-                 res.send('');
-              }
-  })
-  }
-  })
-  .catch(err => res.status(500).send(err))  
-});
-
-// router.get('/login/redirect', (req, res) => {
-//     res.clearCookie('userID');
-//     res.clearCookie('displayName');
-//     res.clearCookie('profile_img');
-//     let user = req.user;
-//     console.log("FROM AUTH/LOGIN");
-//     console.log(user);
-//     res.cookie('userID', `${user.u_id}`, {maxAge: 3600000});
-//     res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
-//     res.cookie('profile_img', `${user.profile_img}`, {maxAge: 3600000});
-//     res.redirect(`${FE_URL}/`);
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/auth/login/redirect',
+    failureRedirect: '/'
+}));
+// router.post('/login', async (req, res, next) => {
+//   db(`SELECT * FROM users WHERE email = '${req.body.email}';`)
+//   .then(async result => {
+//     let parsedResult = JSON.parse(JSON.stringify(result))
+//      if (parsedResult.data[0].password) {
+//       bcrypt.compare(req.body.password, parsedResult.data[0].password, function (err, result) {
+//               if (result == true) {
+//                   // res.send(parsedResult.data[0].displayName);
+//                   return res.redirect('/auth/login/redirect');
+//                   next();
+//               } else {
+//                  res.send('');
+//               }
+//   })
+//   }
+//   })
+//   .catch(err => res.status(500).send(err))  
 // });
+
+router.get('/login/redirect', (req, res) => {
+    res.clearCookie('userID');
+    res.clearCookie('displayName');
+    res.clearCookie('profile_img');
+    let user = req.user;
+    console.log("FROM AUTH/LOGIN");
+    console.log(user);
+    res.cookie('userID', `${user.u_id}`, {maxAge: 3600000});
+    res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
+    res.cookie('profile_img', `${user.profile_img}`, {maxAge: 3600000});
+    res.redirect(`${FE_URL}/`);
+});
 
 //auth with Google
 // router.get('/google', passport.authenticate('google', {

@@ -7,7 +7,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const fileUpload = require("express-fileupload");
-// const passportSetup = require('./config/passport-setup');
+const passportSetup = require('./config/passport-setup');
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
