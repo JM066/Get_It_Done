@@ -66,7 +66,7 @@ class Main extends React.Component {
     render() {
       const { serviceType }  = this.props;
       const googlePlace = (<GooglePlacesAutocomplete
-      apiKey={GOOGLE_API_KEY}
+      apiKey={'AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y'}
       inputClassName="form-control rounded mb-2 mr-sm-2"
       onSelect={({ place_id }) => (
         
@@ -87,15 +87,6 @@ class Main extends React.Component {
                             <p>Find a Do-er now</p>
                             <div>
                                 <div className="input-group mb-3">
-                                    {/* <GooglePlacesAutocomplete
-                                        apiKey={GOOGLE_API_KEY}
-                                        inputClassName="form-control rounded mb-2 mr-sm-2"
-                                        onSelect={({ place_id }) => (
-                                          
-                                          this.setState({ locality : place_id})
-                                        )}
-                                        
-                                    /> */}
                                     {googlePlace}
                                     <select className="custom-select rounded mb-2 mr-sm-2" onChange={this.handleService}>
                                       {serviceType.map(item => {
