@@ -1,11 +1,11 @@
 {
-  "name": "get-it-done",
+  "name": "get_it_done",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
     "migrate": "node model/database.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && yarn install && yarn build"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.2",
