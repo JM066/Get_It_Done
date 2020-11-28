@@ -60,8 +60,8 @@ app.use(express.static('public'));
 
 //send all the routes to client/build/index.html file
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + 'build', 'index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 
