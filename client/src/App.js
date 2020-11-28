@@ -7,6 +7,7 @@ import Main from './components/Main';
 import MapView from "./components/MapView";
 import Profile from "./components/Profile"
 import 'bootstrap/dist/css/bootstrap.min.css';
+// import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { BrowserRouter as Router, Redirect, Route, Link, NavLink } from "react-router-dom";
 
 
@@ -28,7 +29,6 @@ class App extends React.Component {
     this.setState({
       serviceType: serviceData
     })
-   
   }
   getProviders = (providersData) => {
     this.setState({
