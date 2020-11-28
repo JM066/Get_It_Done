@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage" : "https://lit-journey-49891.herokuapp.com"
+  "proxy": "http://localhost:5000"
 }
