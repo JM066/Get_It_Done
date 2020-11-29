@@ -2,11 +2,11 @@ import React from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import './main.css';
-import { withRouter } from "react-router-dom";
+import {Link, Route} from "react-router-dom";
 const GOOGLE_API_KEY = process.env.REACT_APP_PLACE_API_KEY;
-   // "react-responsive-modal": "^5.0.2",
 
-class Main extends React.Component {
+
+export default class Main extends React.Component {
 
   constructor(props) {
     super(props) 
@@ -20,11 +20,10 @@ class Main extends React.Component {
     }
   }
   
-  handleSearch = async () => {
+  handleSearch = async (history) => {
     const providerList = await fetch (`/services/servicebyidandloc/${this.state.filteredService}/${this.state.locality}`);
     const providersData = await providerList.json();
     this.props.getProviders(providersData);
-    this.props.history.push('/getService');
   }
 
   handleService = (e) => {
@@ -94,7 +93,22 @@ class Main extends React.Component {
                                       }
                                       )}
                                     </select>
-                                    <button className="btn btn-outline-success mb-2 btn-search" onClick={this.handleSearch}>
+                                    <Route exact path='/' render={({ history}) => (
+                                      <Link to={"/getService"}>
+                                        <button className="btn btn-outline-success mb-2 btn-search" onClick={this.handleSearch}>
+                                          <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd"
+                                                      d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                                <path fillRule="evenodd"
+                                                      d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                            </svg>
+                                            &nbsp;&nbsp;Search
+                                        </button>
+                                      </Link> 
+                                     )} />
+
+                                    {/* <button className="btn btn-outline-success mb-2 btn-search" onClick={this.handleSearch}>
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd"
@@ -103,7 +117,7 @@ class Main extends React.Component {
                                                   d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
                                         </svg>
                                         &nbsp;&nbsp;Search
-                                    </button>
+                                    </button> */}
                                     {/* <button className="btn btn-outline-success mb-2 btn-search">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -128,4 +142,4 @@ class Main extends React.Component {
     }
 }
 
-export default withRouter(Main);
+
