@@ -93,6 +93,12 @@ export default class Main extends React.Component {
                                       }
                                       )}
                                     </select>
+
+                                    <Route path="/" render={({ history }) => (
+                                      <Link to={"/getService"}>
+                                          <p>GetService</p>
+                                      </Link>
+                                      )}/>
                                     <Route exact path='/' render={({ history}) => (
                                       <Link to={"/getService"}>
                                         <button className="btn btn-outline-success mb-2 btn-search" onClick={this.handleSearch}>
