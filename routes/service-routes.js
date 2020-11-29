@@ -28,7 +28,7 @@ router.get('/servicetype', function (req, res, next) {
 
 // Get ServiceProvider from Type and locality
 router.get('/servicebyidandloc/:serviceTypeID/:placeID', async function (req, res, next) {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${req.params.placeID}&fields=geometry,formatted_address,address_component&key=${process.env.GOOGLE_PLACES_KEY}`);
+    const response = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${req.params.placeID}&fields=geometry,formatted_address,address_component&key=AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y`);
     const json = await response.json();
     let placeDetails = {
         locality: json.result.address_components[1].long_name,

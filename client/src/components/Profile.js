@@ -12,7 +12,6 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state.userData)
 
         fetch(`/users/services/${this.state.userData.userID}`)
             .then(response => response.json())
